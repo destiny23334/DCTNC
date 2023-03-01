@@ -1,7 +1,6 @@
 from torch.utils.data import Dataset
 import pandas as pd
 import numpy as np
-import torch.nn.functional as F
 
 
 def cal_noisy_ratio(integrate_labels: list, true_labels: np.ndarray):
@@ -27,12 +26,6 @@ def get_noisy_label(length: int, answers: np.ndarray):
 
 def cal_gini(x: np.ndarray) -> int:
     return 1 - ((x / x.sum()) ** 2).sum()
-
-
-def get_predict(out):
-    output = F.softmax(out, dim=1)
-    _, predict = output.topk(1, 1, True, True)
-    return output[0, predict], predict.t()
 
 
 class MyDataset(Dataset):
